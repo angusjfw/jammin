@@ -50,12 +50,10 @@ function recordNote(tone) {
 }
 
 function play(track) {
-  $.each(track, function(time,note) {
-    console.log('begplayingnote');
+  $.each(track, function(time, note) {
     setTimeout(function(){
       playBack(note);
-      console.log('playingnote');
-    },time);
+    }, time);
   });
 }
 

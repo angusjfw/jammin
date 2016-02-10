@@ -1,4 +1,7 @@
-tone.js test
+tone.js & socket.io test
+
+play and record music with friends...
+
 ###Usage
 ```
 git clone git@github.com:angusjfw/jammin.git

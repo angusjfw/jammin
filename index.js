@@ -25,11 +25,12 @@ io.on('connection', function (socket) {
   });
 
   socket.on('transmit note', function(tone) {
-    console.log('server playing note', tone);
+    console.log('server received note', tone);
     io.emit('play note', tone);
   });
 
   socket.on('transmit record', function(record) {
+    console.log('server received record');
     currentRecord = record;
   });
 
