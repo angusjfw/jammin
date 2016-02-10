@@ -1,7 +1,5 @@
 // stopwatch
-
 StopWatch = function(){
-    this.reset();
 };
 
 StopWatch.prototype.startTime = function(){
@@ -18,39 +16,24 @@ StopWatch.prototype.reset = function(){
   this.elapsedMilliseconds = 0;
 };
 
-// tone.js
-
-var synth = new Tone.SimpleSynth().toMaster();
-
 var s1 = new StopWatch();
-var recording = {};
 
-
-function playSound(tone) {
-  synth.triggerAttackRelease(tone, "8n");
-  var elapsedTime = s1.markTime();
-  recording[elapsedTime] = tone;
-  console.log(recording);
-}
+//tone.js
+var synth = new Tone.SimpleSynth().toMaster();
 
 function playBack(tone) {
   synth.triggerAttackRelease(tone, "8n");
 }
 
-// websockets
-var socket = io();
+//recording
+var recording = {};
 
-function emitSound(tone) {
-  socket.emit('transmit note', tone);
-  console.log('client transmitting note');
+function playRecord(tone) {
+  playBack(tone);
+  var elapsedTime = s1.markTime();
+  recording[elapsedTime] = tone;
+  console.log(recording);
 }
-
-socket.on('play note', function(tone) {
-  playSound(tone);
-  $('#playing').text(tone);
-  console.log('client played note');
-
-});
 
 function playSong() {
   play(recording);
@@ -63,7 +46,19 @@ function play(track) {
       playBack(note);
       console.log('playingnote');
     },time);
-
   });
-
 }
+
+// websockets
+var socket = io();
+
+function emitSound(tone) {
+  socket.emit('transmit note', tone);
+  console.log('client transmitting note');
+}
+
+socket.on('play note', function(tone) {
+  playRecord(tone);
+  $('#playing').text(tone);
+  console.log('client played note');
+});
