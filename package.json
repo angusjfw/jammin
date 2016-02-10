@@ -1,16 +1,18 @@
 {
-  "name": "y",
+  "name": "Jammin",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "http-server .",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "http-server": "^0.8.5",
+    "express": "^4.13.4",
+    "jquery": "^2.2.0",
+    "socket.io": "^1.4.5",
     "tone": "^0.6.1"
   }
 }
