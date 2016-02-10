@@ -1,7 +1,6 @@
 var socket = io();
 
 var synth = new Tone.SimpleSynth().toMaster();
-var polySynth = new Tone.PolySynth(4, Tone.MonoSynth).toMaster();
 
 function playSound(tone) {
   synth.triggerAttackRelease(tone, "8n");
