@@ -4,7 +4,7 @@ var synth = new Tone.SimpleSynth().toMaster();
 var polySynth = new Tone.PolySynth(4, Tone.MonoSynth).toMaster();
 
 function playSound(tone) {
-  synth.triggerAttackRelease(tone + "4", "8n");
+  synth.triggerAttackRelease(tone, "8n");
 }
 
 function emitSound(tone) {
