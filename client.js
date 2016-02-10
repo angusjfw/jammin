@@ -10,3 +10,13 @@ function playSound(tone) {
 function polyChord() {
   polySynth.triggerAttackRelease(["C4", "E4", "G4", "B4"], "2n");
 }
+
+function emitSound(tone) {
+  socket.emit('transmit note', tone);
+  console.log('client transmitting note');
+}
+
+socket.on('play note', function(tone) {
+  playSound(tone);
+  console.log('client played note');
+});

@@ -17,6 +17,16 @@ app.get('/', function(request, response) {
 
 io.on('connection', function (socket) {
   console.log('user connected');
+
+  socket.on('disconnect', function() {
+    console.log('user disconnected');
+  });
+
+  socket.on('transmit note', function(tone) {
+    console.log(tone);
+    console.log('server playing note');
+    io.emit('play note', tone);
+  });
 });
 
 
