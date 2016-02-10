@@ -33,6 +33,10 @@ function playSound(tone) {
   console.log(recording);
 }
 
+function playBack(tone) {
+  synth.triggerAttackRelease(tone, "8n");
+}
+
 // websockets
 var socket = io();
 
@@ -45,4 +49,21 @@ socket.on('play note', function(tone) {
   playSound(tone);
   $('#playing').text(tone);
   console.log('client played note');
+
 });
+
+function playSong() {
+  play(recording);
+}
+
+function play(track) {
+  $.each(track, function(time,note) {
+    console.log('begplayingnote');
+    setTimeout(function(){
+      playBack(note);
+      console.log('playingnote');
+    },time);
+
+  });
+
+}
