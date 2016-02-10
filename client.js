@@ -8,7 +8,7 @@ StopWatch.prototype.startTime = function(){
 };
 
 StopWatch.prototype.markTime = function(){
-    return new Date().getTime() - s1.startMilliseconds;
+    return new Date().getTime() - this.startMilliseconds;
 };
 
 StopWatch.prototype.reset = function(){
@@ -16,7 +16,7 @@ StopWatch.prototype.reset = function(){
   this.elapsedMilliseconds = 0;
 };
 
-var s1 = new StopWatch();
+var stopWatch = new StopWatch();
 
 //tone.js
 var synth = new Tone.SimpleSynth().toMaster();
@@ -26,17 +26,27 @@ function playBack(tone) {
 }
 
 //recording
-var recording = {};
+var record = {};
+var recording = false;
 
-function playRecord(tone) {
-  playBack(tone);
-  var elapsedTime = s1.markTime();
-  recording[elapsedTime] = tone;
-  console.log(recording);
+function toggleRecording() {
+  if (recording) {
+    emitRecord(record);
+    $('#recordButton').text('Start Recording');
+    record = {};
+    recording = false;
+  }
+  else {
+    stopWatch.startTime();
+    $('#recordButton').text('Stop Recording');
+    recording = true;
+  }
 }
 
-function playSong() {
-  play(recording);
+function recordNote(tone) {
+  var elapsedTime = stopWatch.markTime();
+  record[elapsedTime] = tone;
+  console.log(record);
 }
 
 function play(track) {
@@ -58,7 +68,20 @@ function emitSound(tone) {
 }
 
 socket.on('play note', function(tone) {
-  playRecord(tone);
+  playBack(tone);
+  if (recording) { recordNote(tone); }
   $('#playing').text(tone);
   console.log('client played note');
+});
+
+function emitRecord() {
+  socket.emit('transmit record', record);
+}
+
+function playRecording() {
+  socket.emit('get record');
+}
+
+socket.on('receive record', function(record) {
+  play(record);
 });

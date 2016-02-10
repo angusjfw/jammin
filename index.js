@@ -4,6 +4,8 @@ var http = require('http').Server(app);
 
 var io = require('socket.io')(http);
 
+var currentRecord = {};
+
 app.set('port', (process.env.PORT || 8080));
 app.use(express.static(__dirname));
 
@@ -23,8 +25,15 @@ io.on('connection', function (socket) {
   });
 
   socket.on('transmit note', function(tone) {
-    console.log(tone);
-    console.log('server playing note');
+    console.log('server playing note', tone);
     io.emit('play note', tone);
+  });
+
+  socket.on('transmit record', function(record) {
+    currentRecord = record;
+  });
+
+  socket.on('get record', function() {
+    socket.emit('receive record', currentRecord);
   });
 });
