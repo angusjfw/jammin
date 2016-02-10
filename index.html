@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Jammin</title>
+    <script type="text/javascript" src="node_modules/tone/build/Tone.js"></script>
+  </head>
+
+  <body>
+    <button type="button" onclick="playSound('C')">Middle Cceeee</button>
+    <button type="button" onclick="playSound('D')">D</button>
+    <button type="button" onclick="playSound('E')">E</button>
+    <br>
+    <button type="button" onclick="polyChord()">play chord on poly</button>
+
+    <script>
+      var synth = new Tone.SimpleSynth().toMaster();
+      function playSound(tone) {
+        synth.triggerAttackRelease(tone + "4", "8n");
+      }
+      var polySynth = new Tone.PolySynth(4, Tone.MonoSynth).toMaster();
+      function polyChord() {
+        polySynth.triggerAttackRelease(["C4", "E4", "G4", "B4"], "2n");
+      }
+    </script>
+
+  </body>
+</html>
