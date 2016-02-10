@@ -28,5 +28,3 @@ io.on('connection', function (socket) {
     io.emit('play note', tone);
   });
 });
-
-
